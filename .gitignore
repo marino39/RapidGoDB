@@ -1,0 +1,6 @@
+# exclude
+.idea
+vendor
+
+# include
+!vendor/vendor.json
