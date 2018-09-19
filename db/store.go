@@ -1,9 +1,5 @@
 package db
 
-import (
-	"sync"
-)
-
 type Store interface {
 	Set(key string, value interface{})
 	Get(key string) interface{}
@@ -11,10 +7,10 @@ type Store interface {
 
 type keyValueStore struct {
 	store  map[string]interface{}
-	locker sync.Locker
+	locker RWLocker
 }
 
-func newKeyValueStore(locker sync.Locker) *keyValueStore {
+func newKeyValueStore(locker RWLocker) *keyValueStore {
 	return &keyValueStore{make(map[string]interface{}), locker}
 }
 
@@ -25,7 +21,7 @@ func (ks *keyValueStore) Set(key string, value interface{}) {
 }
 
 func (ks *keyValueStore) Get(key string) interface{} {
-	ks.locker.Lock()
-	defer ks.locker.Unlock()
+	ks.locker.RLock()
+	defer ks.locker.RUnlock()
 	return ks.store[key]
 }
