@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	db := db.GetRapidGoDB(db.RGDBConfig)
-	db.Set("Test", "Hello world!")
-	log.Println(db.Get("Test"))
+	rgdb := db.GetRapidGoDB(db.RGDBConfig)
+	rgdb.Set("Test", "Hello world!")
+	log.Println(rgdb.Get("Test"))
 }
